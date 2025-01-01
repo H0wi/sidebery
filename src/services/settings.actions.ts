@@ -170,6 +170,7 @@ export function updateSettingsFg(settings?: SettingsState | null): void {
   const fontSize = prev.fontSize !== next.fontSize
   const updateSidebarTitleChanged = prev.updateSidebarTitle !== next.updateSidebarTitle
   const pinnedTabsPositionChanged = prev.pinnedTabsPosition !== next.pinnedTabsPosition
+  const colorizeTabsRulesChanged = prev.colorizeTabsRules !== next.colorizeTabsRules
   const colorizeTabsChanged = prev.colorizeTabs !== next.colorizeTabs
   const colorizeTabsSrcChanged = prev.colorizeTabsSrc !== next.colorizeTabsSrc
   const colorizeTabsBranchesChanged = prev.colorizeTabsBranches !== next.colorizeTabsBranches
@@ -262,7 +263,7 @@ export function updateSettingsFg(settings?: SettingsState | null): void {
     Tabs.colorizeBranches()
   }
 
-  if ((colorizeTabsChanged || colorizeTabsSrcChanged) && Settings.state.colorizeTabs) {
+  if ((colorizeTabsChanged || colorizeTabsSrcChanged || colorizeTabsRulesChanged) && Settings.state.colorizeTabs) {
     Tabs.colorizeTabs()
   }
 

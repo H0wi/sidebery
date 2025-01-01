@@ -11,6 +11,7 @@ export interface PopupsReactiveState {
   groupConfigPopup: GroupConfigPopup | null
   newTabShortcutsPopup: NewTabShortcutsPopup | null
   siteConfigPopup: SiteConfigPopup | null
+  tabColorRulesPopup: TabColorRulesPopup | null
   tabMoveRulesPopup: TabMoveRulesPopup | null
   tabReopenRulesPopup: TabReopenRulesPopup | null
   confirm: ConfirmDialog | null
@@ -41,6 +42,10 @@ export interface NewTabShortcutsPopup {
   rawShortcuts: string[]
 }
 
+export interface TabColorRulesPopup {
+  global: boolean
+}
+
 export interface TabMoveRulesPopup {
   panelId: ID
   rules: TabToPanelMoveRuleConfig[]
@@ -61,6 +66,7 @@ export let reactive: PopupsReactiveState = {
   groupConfigPopup: null,
   newTabShortcutsPopup: null,
   siteConfigPopup: null,
+  tabColorRulesPopup: null,
   tabMoveRulesPopup: null,
   tabReopenRulesPopup: null,
   confirm: null,
@@ -195,6 +201,16 @@ export function closeSiteConfigPopup(): void {
   if (!reactive.siteConfigPopup) return
   reactive.siteConfigPopup = null
 }
+
+export function openTabColorRulesPopup(): void {
+  reactive.tabColorRulesPopup = { global: true }
+}
+
+export function closeTabColorRulesPopup(): void {
+  if (!reactive.tabColorRulesPopup) return
+  reactive.tabColorRulesPopup = null
+}
+
 
 export function openTabMoveRulesPopup(panel?: PanelConfig) {
   if (!Utils.isTabsPanel(panel)) return

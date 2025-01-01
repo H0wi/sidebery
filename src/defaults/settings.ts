@@ -130,6 +130,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   // Tabs colorization
   colorizeTabs: false,
   colorizeTabsSrc: 'domain',
+  colorizeTabsRules: [],
   colorizeTabsBranches: false,
   colorizeTabsBranchesSrc: 'url',
   inheritCustomColor: true,
@@ -326,7 +327,7 @@ export const SETTINGS_OPTIONS = {
   dndOutside: ['win', 'data'],
   animationSpeed: ['fast', 'norm', 'slow'],
   treeRmOutdent: ['branch', 'first_child'],
-  colorizeTabsSrc: ['domain', 'container'],
+  colorizeTabsSrc: ['domain', 'container', 'color-rules'],
   colorizeTabsBranchesSrc: ['url', 'domain'],
   searchBarMode: ['static', 'dynamic', 'none'],
   searchPanelSwitch: ['any', 'same_type', 'none'],

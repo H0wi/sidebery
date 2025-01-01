@@ -314,9 +314,11 @@ section(ref="el")
         :inactive="!Settings.state.colorizeTabs"
         :opts="Settings.getOpts('colorizeTabsSrc')"
         @update:value="Settings.saveDebounced(150)")
+      .ctrls
+        .btn(:class="{ '-inactive': Settings.state.colorizeTabsSrc != 'color-rules' }" @click="Popups.openTabColorRulesPopup()") {{translate('settings.color_rules_editor')}}
     ToggleField(
       label="settings.colorize_branches"
-      :inactive="!Settings.state.tabsTree"
+      :inactive="!Settings.state.tabsTree || Settings.state.colorizeTabsSrc == 'color-rules'"
       v-model:value="Settings.state.colorizeTabsBranches"
       @update:value="Settings.saveDebounced(150)")
     .sub-fields
@@ -324,12 +326,12 @@ section(ref="el")
         label="settings.colorize_branches_src"
         optLabel="settings.colorize_branches_src_"
         v-model:value="Settings.state.colorizeTabsBranchesSrc"
-        :inactive="!Settings.state.tabsTree || !Settings.state.colorizeTabsBranches"
+        :inactive="!Settings.state.tabsTree || Settings.state.colorizeTabsSrc == 'color-rules' || !Settings.state.colorizeTabsBranches"
         :opts="Settings.getOpts('colorizeTabsBranchesSrc')"
         @update:value="Settings.saveDebounced(150)")
     ToggleField(
       label="settings.tabs.inherit_custom_color"
-      :inactive="!Settings.state.tabsTree"
+      :inactive="!Settings.state.tabsTree || Settings.state.colorizeTabsSrc == 'color-rules'"
       v-model:value="Settings.state.inheritCustomColor"
       @update:value="Settings.saveDebounced(150)")
 
@@ -474,6 +476,7 @@ import CountField from '../../components/count-field.vue'
 import ToggleField from '../../components/toggle-field.vue'
 import SelectField from '../../components/select-field.vue'
 import NumField from '../../components/num-field.vue'
+import { Popups } from 'src/services/_services'
 
 const el = ref<HTMLElement | null>(null)
 const newTabPosEl = ref<HTMLElement | null>(null)

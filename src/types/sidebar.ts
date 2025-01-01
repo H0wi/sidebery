@@ -322,6 +322,15 @@ export type PanelConfig =
   | SyncPanelConfig
 export type Panel = BookmarksPanel | TabsPanel | HistoryPanel | SyncPanel
 
+export interface TabColorRuleConfig {
+  id: ID
+  active: boolean
+  name?: string
+  url: string
+  color: string
+  topLvlOnly?: boolean
+}
+
 export interface TabToPanelMoveRuleConfig {
   id: ID
   active: boolean

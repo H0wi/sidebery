@@ -1,3 +1,4 @@
+import { TabColorRuleConfig } from 'src/types'
 import { SETTINGS_OPTIONS } from '../defaults'
 
 export interface SettingsState {
@@ -129,6 +130,7 @@ export interface SettingsState {
   // Tabs colorization
   colorizeTabs: boolean
   colorizeTabsSrc: (typeof SETTINGS_OPTIONS.colorizeTabsSrc)[number]
+  colorizeTabsRules: TabColorRuleConfig[]
   colorizeTabsBranches: boolean
   colorizeTabsBranchesSrc: (typeof SETTINGS_OPTIONS.colorizeTabsBranchesSrc)[number]
   inheritCustomColor: boolean

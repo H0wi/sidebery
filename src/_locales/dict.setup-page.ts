@@ -3327,6 +3327,14 @@ Przykłady: "*", "ctrl+$", "ctrl+alt+g"`,
     zh: '容器',
     ja: 'コンテナ',
   },
+  'settings.colorize_tabs_src_color-rules': {
+    en: 'color-rules',
+    de: 'Regelbasierte Färbung',
+  },
+  'settings.color_rules_editor': {
+    en: 'Edit color rules',
+    de: 'Regeln zur Färbung bearbeiten',
+  },
   'settings.colorize_branches': {
     en: 'Colorize branches',
     de: 'Zweige einfärben',

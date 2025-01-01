@@ -3,6 +3,7 @@ import * as Utils from 'src/utils'
 import { Containers } from './containers'
 import { Settings } from './settings'
 import { Tabs } from './tabs.fg'
+import { Tab, TabColorRuleConfig } from 'src/types'
 
 const CONTAINER_COLORS: Record<string, string> = {
   blue: '#37adff',
@@ -16,8 +17,9 @@ const CONTAINER_COLORS: Record<string, string> = {
 }
 
 export function colorizeTabs(): void {
+  const colorRules = Settings.state.colorizeTabsRules
   for (const tab of Tabs.list) {
-    colorizeTab(tab.id)
+    colorizeTab(tab.id, colorRules)
   }
 }
 
@@ -26,18 +28,46 @@ export function colorizeTabDebounced(tabId: ID, delayMS = 500): void {
   clearTimeout(colorizeTabTimeouts[tabId])
   colorizeTabTimeouts[tabId] = setTimeout(() => {
     delete colorizeTabTimeouts[tabId]
-    colorizeTab(tabId)
+    colorizeTab(tabId, Settings.state.colorizeTabsRules)
   }, delayMS)
 }
 
-export function colorizeTab(tabId: ID): void {
+function checkUrl(url: string, matchString: string): boolean {
+  matchString = matchString.trim()
+
+  if (matchString.startsWith('/') && matchString.endsWith('/')) {
+    try {
+      const re = new RegExp(matchString.slice(1, -1))
+      return re.test(url)
+    } catch {
+      return false
+    }
+  } else {
+    return url.includes(matchString)
+  }
+}
+
+export function colorizeTab(tabId: ID, colorRules?: TabColorRuleConfig[]): void {
   const tab = Tabs.byId[tabId]
   if (!tab) return
+
+  const colorFromRules = (tab: Tab): string | null => {
+    if (!colorRules) return null
+    for (const rule of colorRules) {
+      console.debug("check", tab.url, rule.url)
+      if (checkUrl(tab.url, rule.url)) {
+        return rule.color
+      }
+    }
+    return null
+  }
 
   let srcStr, color
   if (Settings.state.colorizeTabsSrc === 'domain') {
     srcStr = Utils.getDomainOf(tab.url)
     color = Utils.colorFromString(srcStr, 60)
+  } else if (Settings.state.colorizeTabsSrc === 'color-rules') {
+    color = colorFromRules(tab)
   } else {
     const container = Containers.reactive.byId[tab.cookieStoreId]
     if (container) {

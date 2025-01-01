@@ -19,9 +19,10 @@
       SnapshotsView(v-else-if="SetupPage.reactive.activeView === 'snapshots'")
       StorageView(v-else-if="SetupPage.reactive.activeView === 'storage'")
       KeybindingsView(v-else)
-  
+
   Transition(name="popup"): BookmarksPopup(v-if="Bookmarks.reactive.popup")
   Transition(name="popup"): NewTabShortcutsPopup(v-if="Popups.reactive.newTabShortcutsPopup")
+  Transition(name="popup"): TabColorRulesPopup(v-if="Popups.reactive.tabColorRulesPopup")
   Transition(name="popup"): TabMoveRulesPopup(v-if="Popups.reactive.tabMoveRulesPopup")
   Transition(name="popup"): TabReopenRulesPopup(v-if="Popups.reactive.tabReopenRulesPopup")
   Transition(name="popup" type="transition"): DialogPopup(v-if="Popups.reactive.dialog" :dialog="Popups.reactive.dialog")
@@ -45,6 +46,7 @@ import StorageView from './components/storage.vue'
 import KeybindingsView from './components/keybindings.vue'
 import BookmarksPopup from 'src/components/popup.bookmarks.vue'
 import NewTabShortcutsPopup from 'src/components/popup.new-tab-shortcuts.vue'
+import TabColorRulesPopup from 'src/components/popup.tab-color-rules.vue'
 import TabMoveRulesPopup from 'src/components/popup.tab-move-rules.vue'
 import TabReopenRulesPopup from 'src/components/popup.tab-reopen-rules.vue'
 import DialogPopup from 'src/components/popup.dialog.vue'
@@ -71,6 +73,12 @@ function onDocumentKeyup(e: KeyboardEvent): void {
     // Tab reopening rules popup
     if (Popups.reactive.tabReopenRulesPopup) {
       Popups.closeTabReopenRulesPopup()
+      return
+    }
+
+    // Tab color rules popup
+    if (Popups.reactive.tabColorRulesPopup) {
+      Popups.closeTabColorRulesPopup()
       return
     }
 
